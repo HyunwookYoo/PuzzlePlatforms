@@ -6,7 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "PlatformTrigger.generated.h"
 
+class UStaticMeshComponent;
 class UBoxComponent;
+class AMovingPlatform;
 
 UCLASS()
 class PUZZLEPLATFORMS_API APlatformTrigger : public AActor
@@ -17,9 +19,6 @@ public:
 	// Sets default values for this actor's properties
 	APlatformTrigger();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -27,6 +26,9 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* TriggerVolume = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	TArray<AMovingPlatform*> PlatformsToTrigger;
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedCOmp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
