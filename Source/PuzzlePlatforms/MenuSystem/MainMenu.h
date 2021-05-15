@@ -8,24 +8,49 @@
 #include "MainMenu.generated.h"
 
 class UButton;
+class UWidgetSwitcher;
+class UWidget;
 
 UCLASS()
 class PUZZLEPLATFORMS_API UMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
-
+public:
+	void SetMenuInterface(IMenuInterface* MenuInterfaceToSet);
+	
+	void Setup();
+	
+	void Teardown();
 protected:
 	virtual bool Initialize() override;
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	UButton* Host;
+	UButton* HostButton;
 
 	UPROPERTY(meta = (BindWidget))
-	UButton* Join;
+	UButton* JoinButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* CancelJoinMenuButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UWidgetSwitcher* MenuSwitcher;
+
+	UPROPERTY(meta = (BindWidget))
+	UWidget* JoinMenu;
+
+	UPROPERTY(meta = (BindWidget))
+	UWidget* MainMenu;
 
 	UFUNCTION()
 	void HostServer();
 
-	IMenuInterface* MenuInterface = nullptr;
+	UFUNCTION()
+	void OpenJoinMenu();
+
+	UFUNCTION()
+	void OpenMainMenu();
+
+	IMenuInterface* MenuInterface;
 };
